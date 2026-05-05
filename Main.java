@@ -6,8 +6,11 @@ public class Main {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
     GradeBook gradeBook = new GradeBook();
+    Assignment assignment = new Assignment();
 
     gradeBook.loadGradesFromTextFile();
+    assignment.loadAssignmentsFromTextFile();
+
 
     System.out.print("Enter Username: ");
     String username = scanner.nextLine();
@@ -50,7 +53,7 @@ public class Main {
             System.out.print("Student Email: ");
             String sEmail = scanner.nextLine();
             Student s = new Student(sUser, sPass, sName, sEmail);
-            User.addLogin(sUser, sPass);
+            User.addLogin(sUser, sPass, sName, sEmail);
             instructor.addStudent(s, gradeBook);
           } else if (choice.equals("2")) {
             System.out.print("Student Username: ");

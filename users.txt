@@ -1,4 +1,5 @@
-profSmith,admin123,Instructor
-jdoe,pass123,Student
-asmith,pass456,Student
-hosae,hoea,Student
+profSmith,admin123,Instructor,Professor Smith,profsmith@cuesta.edu
+jdoe,pass123,Student,John Doe,john_doe@my.cuesta.edu
+asmith,pass456,Student,Alex Smith,alex_smith@my.cuesta.edu
+Hodoodle,doodlePass,Student,Hosae,pricehosea@gmail.com
+oaidsfh,aosif,Student,aosd,asod

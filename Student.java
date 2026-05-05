@@ -32,6 +32,7 @@ public class Student extends User {
       writer.println("Letter Grade: " + gradeBook.determineLetterGrade(avg));
       writer.close();
     } catch (FileNotFoundException e) {
+      System.err.println(e.getMessage());
     }
   }
 

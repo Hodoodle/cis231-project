@@ -38,11 +38,11 @@ public abstract class User {
     return false;
   }
 
-  public static void addLogin(String inputUsername, String inputPassword){
+  public static void addLogin(String inputUsername, String inputPassword, String inputName, String inputEmail){
     try{
       FileWriter fw = new FileWriter("users.txt", true);
       PrintWriter writer = new PrintWriter(fw);
-      writer.println(inputUsername + "," + inputPassword + ",Student");
+      writer.println(inputUsername + "," + inputPassword + ",Student," + inputName + "," + inputEmail);
       writer.close();
       fw.close();
     } catch(IOException e){
