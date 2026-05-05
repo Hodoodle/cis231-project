@@ -1,6 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
+import java.io.FileWriter;
 
 public abstract class User {
   protected String username;
@@ -33,6 +36,18 @@ public abstract class User {
     } catch (FileNotFoundException e) {
     }
     return false;
+  }
+
+  public static void addLogin(String inputUsername, String inputPassword){
+    try{
+      FileWriter fw = new FileWriter("users.txt", true);
+      PrintWriter writer = new PrintWriter(fw);
+      writer.println(inputUsername + "," + inputPassword + ",Student");
+      writer.close();
+      fw.close();
+    } catch(IOException e){
+      System.err.println(e.getMessage());
+    }
   }
 
   public String getRole() {

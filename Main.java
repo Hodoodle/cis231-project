@@ -43,9 +43,14 @@ public class Main {
           if (choice.equals("1")) {
             System.out.print("Student Username: ");
             String sUser = scanner.nextLine();
+            System.out.print("Student Password: ");
+            String sPass = scanner.nextLine();
             System.out.print("Student Name: ");
             String sName = scanner.nextLine();
-            Student s = new Student(sUser, "pass", sName, "email");
+            System.out.print("Student Email: ");
+            String sEmail = scanner.nextLine();
+            Student s = new Student(sUser, sPass, sName, sEmail);
+            User.addLogin(sUser, sPass);
             instructor.addStudent(s, gradeBook);
           } else if (choice.equals("2")) {
             System.out.print("Student Username: ");
@@ -80,6 +85,8 @@ public class Main {
           }
         }
       }
+    } else {
+      System.out.println("Login Failed, reboot and try again.");
     }
     gradeBook.saveGradesToTextFile();
     scanner.close();

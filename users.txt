@@ -1,3 +1,4 @@
 profSmith,admin123,Instructor
 jdoe,pass123,Student
 asmith,pass456,Student
+hosae,hoea,Student

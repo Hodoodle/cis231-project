@@ -24,6 +24,7 @@ public class Student extends User {
     try {
       PrintWriter writer = new PrintWriter(username + "_grades.txt");
       writer.println("Name: " + name);
+      writer.println("Email: " + email);
       ArrayList<Double> grades = gradeBook.getGradesForStudent(this);
       writer.println("Grades: " + grades);
       double avg = gradeBook.calculateAverage(this);
