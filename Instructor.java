@@ -1,15 +1,16 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
 
 public class Instructor extends User {
   private String name;
+  private String email;
 
   public Instructor(String username, String password, String name) {
-    super(username, password, "Instructor");
-    this.name = name;
+    String[] data = User.returnData(username);
+    super(data[0], data[1], data[2]);
+    this.name = data[3];
+    this.email = data[4];
   }
 
   public void addStudent(Student s, GradeBook gradeBook) {
@@ -36,7 +37,9 @@ public class Instructor extends User {
   public void exportStudentGradeFile(Student s, GradeBook gradeBook, Assignment a) {
     try {
       PrintWriter writer = new PrintWriter(s.getUsername() + "_grades.txt");
-      writer.println("Student: " + s.getName());
+      writer.println("Name: " + s.getName());
+      writer.println("Username: " + s.getUsername());
+      writer.println("Email: " + s.getEmail());
       HashMap<String, Double> grades = gradeBook.getGradesForStudent(s);
       grades.forEach((k,v) -> {
           writer.println(k + ":  " + v);

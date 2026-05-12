@@ -1,13 +1,12 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Student extends User {
   private String name;
   private String email;
 
-  public Student(String username, String password, String name, String email) {
+  public Student(String username) {
     String[] data = User.returnData(username);
     super(data[0], data[1], data[2]);
     this.name = data[3];
@@ -29,10 +28,11 @@ public class Student extends User {
     try {
       PrintWriter writer = new PrintWriter(username + "_grades.txt");
       writer.println("Name: " + name);
+      writer.println("Username: " + username);
       writer.println("Email: " + email);
       HashMap<String, Double> grades = gradeBook.getGradesForStudent(this);
       grades.forEach((k,v) -> {
-          writer.println(", " + k + ":" + v);
+          writer.println(k + ": " + v + "/" + a.getMaxPoints(k));
         });
       double avg = gradeBook.calculateAverage(this, a);
       writer.println("Average: " + avg);
@@ -45,5 +45,13 @@ public class Student extends User {
 
   public String getName() {
     return name;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getUsername(){
+    return username;
   }
 }

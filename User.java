@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.io.FileWriter;
-import java.util.ArrayList;
 
 public abstract class User {
   protected String username;

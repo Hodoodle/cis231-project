@@ -71,6 +71,15 @@ public class Assignment {
     return assignmentPoints.get(id);
   }
 
+  public int getMaxPoints(String name) {
+    for (int i : assignmentIndex.keySet()){
+      if (assignmentIndex.get(i).equals(name)){
+        return assignmentPoints.get(i);
+      }
+    }
+    return 0;
+  }
+
   public String getName(int id){
     return assignmentIndex.get(id);
   }

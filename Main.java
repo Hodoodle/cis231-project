@@ -62,8 +62,8 @@ public class Main {
             String sName = scanner.nextLine();
             System.out.print("Student Email: ");
             String sEmail = scanner.nextLine();
-            Student s = new Student(sUser, sPass, sName, sEmail);
             User.addLogin(sUser, sPass, sName, sEmail);
+            Student s = new Student(sUser);
             instructor.addStudent(s, gradeBook);
 
           } else if (choice.equals("2")) {
@@ -95,7 +95,7 @@ public class Main {
             if(!assignment.assignmentExists(aNum)){continue;}
             System.out.print("Grade: ");
             double g = Double.parseDouble(scanner.nextLine());
-            Student s = new Student(sUser, "pass", sUser, "email");
+            Student s = new Student(sUser);
             instructor.recordGrade(s, g, gradeBook, assignment, aNum);
 
           } else if (choice.equals("4")) { // View All Grades
@@ -104,7 +104,7 @@ public class Main {
           } else if (choice.equals("5")) { //Export Student Grade
             System.out.print("Student Username: ");
             String sUser = scanner.nextLine();
-            Student s = new Student(sUser, "pass", sUser, "email");
+            Student s = new Student(sUser);
             instructor.exportStudentGradeFile(s, gradeBook, assignment);
 
           } else if (choice.equals("6")) {
@@ -112,7 +112,7 @@ public class Main {
           }
         }
       } else if (role.equals("Student")) {
-        Student student = new Student(username, password, username, "email");
+        Student student = new Student(username);
         boolean running = true;
         while (running) {
           System.out.println("1. View Grades\n2. Export Grades\n3. Exit");

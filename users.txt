@@ -4,3 +4,4 @@ asmith,pass456,Student,Alex Smith,alex_smith@my.cuesta.edu
 Hodoodle,doodlePass,Student,Hosae,pricehosea@gmail.com
 oaidsfh,aosif,Student,aosd,asod
 hosea_price,pricepass,Student,Hosea,pricehosea@gmail.com
+Hosea Price,hoseapricepass,Student,Hosea Price,hoprisce@gmail.com
