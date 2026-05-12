@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 public abstract class User {
   protected String username;
@@ -37,6 +38,30 @@ public abstract class User {
     }
     return false;
   }
+
+  public static String[] returnData(String username){
+    String[] info = {};
+    try{
+    File file = new File("users.txt");
+      if (!file.exists()) return info;
+
+      Scanner scanner = new Scanner(file);
+      while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+        info = line.split(",");
+        if (info.length >= 5) {
+          if (info[0].equals(username)) {
+            scanner.close();
+            return info;
+          }
+        }
+      }
+      scanner.close();
+    } catch (FileNotFoundException e) {
+    }
+    return info;
+  }
+  
 
   public static void addLogin(String inputUsername, String inputPassword, String inputName, String inputEmail){
     try{

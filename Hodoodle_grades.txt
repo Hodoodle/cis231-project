@@ -1,0 +1,6 @@
+Student: Hodoodle
+Assignment 1: 14.0
+Test 1: 60.0
+Assignment 2: 25.0
+Average: 33.0
+Letter Grade: F

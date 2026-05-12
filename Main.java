@@ -8,8 +8,16 @@ public class Main {
     GradeBook gradeBook = new GradeBook();
     Assignment assignment = new Assignment();
 
-    gradeBook.loadGradesFromTextFile();
-    assignment.loadAssignmentsFromTextFile();
+    if (!gradeBook.loadGradesFromTextFile()){
+      System.out.println("Something went wrong when loading in grades, check to see if the file has been deleted or corrupted.");
+      scanner.close();
+      return;
+    }
+    if (!assignment.loadAssignmentsFromTextFile()) {
+      System.out.println("Something went wrong with loading in assignments, check to see if the file has been deleted or corrupted.");
+      scanner.close();
+      return;
+    }
 
 
     System.out.print("Enter Username: ");
@@ -38,12 +46,14 @@ public class Main {
         while (running) {
           System.out.println(
               "1. Add Student\n"
-                  + "2. Record Grade\n"
-                  + "3. View All Grades\n"
-                  + "4. Export Student Grade File\n"
-                  + "5. Exit");
+                  + "2. Add Assignment\n"
+                  + "3. Record Grade\n"
+                  + "4. View All Grades\n"
+                  + "5. Export Student Grade File\n"
+                  + "6. Exit");
           String choice = scanner.nextLine();
-          if (choice.equals("1")) {
+
+          if (choice.equals("1")) { // Add Student
             System.out.print("Student Username: ");
             String sUser = scanner.nextLine();
             System.out.print("Student Password: ");
@@ -55,21 +65,49 @@ public class Main {
             Student s = new Student(sUser, sPass, sName, sEmail);
             User.addLogin(sUser, sPass, sName, sEmail);
             instructor.addStudent(s, gradeBook);
+
           } else if (choice.equals("2")) {
+            System.out.print("Assignment name: ");
+            String aName = scanner.nextLine();
+            System.out.print("Max Points: ");
+            int aPoints = 0;
+            try{
+              aPoints = Integer.parseInt(scanner.nextLine());
+            } catch(NumberFormatException e) {
+              System.out.println("Enter a valid number.");
+              continue;
+            }
+            assignment.addAssignment(aName, aPoints);
+
+          } else if (choice.equals("3")) { //Grade Assignment
             System.out.print("Student Username: ");
             String sUser = scanner.nextLine();
+            assignment.displayAssignmentIndex();
+            System.out.print("Assignment Id: ");
+            int aNum = 0;
+            try {
+              aNum = Integer.parseInt(scanner.nextLine());
+            } catch(NumberFormatException e){
+              System.out.println("Please enter a valid number.");
+              continue;
+            }
+            
+            if(!assignment.assignmentExists(aNum)){continue;}
             System.out.print("Grade: ");
             double g = Double.parseDouble(scanner.nextLine());
             Student s = new Student(sUser, "pass", sUser, "email");
-            instructor.recordGrade(s, g, gradeBook);
-          } else if (choice.equals("3")) {
-            instructor.viewAllGrades(gradeBook);
-          } else if (choice.equals("4")) {
+            instructor.recordGrade(s, g, gradeBook, assignment, aNum);
+
+          } else if (choice.equals("4")) { // View All Grades
+            instructor.viewAllGrades(gradeBook, assignment);
+
+          } else if (choice.equals("5")) { //Export Student Grade
             System.out.print("Student Username: ");
             String sUser = scanner.nextLine();
             Student s = new Student(sUser, "pass", sUser, "email");
-            instructor.exportStudentGradeFile(s, gradeBook);
-          } else if (choice.equals("5")) {
+            instructor.exportStudentGradeFile(s, gradeBook, assignment);
+
+          } else if (choice.equals("6")) {
             running = false;
           }
         }
@@ -79,11 +117,14 @@ public class Main {
         while (running) {
           System.out.println("1. View Grades\n2. Export Grades\n3. Exit");
           String choice = scanner.nextLine();
-          if (choice.equals("1")) {
-            student.viewOwnGrades(gradeBook);
-          } else if (choice.equals("2")) {
-            student.exportOwnGradeFile(gradeBook);
-          } else if (choice.equals("3")) {
+
+          if (choice.equals("1")) { // View own grades
+            student.viewOwnGrades(gradeBook, assignment);
+
+          } else if (choice.equals("2")) { // Export Grades
+            student.exportOwnGradeFile(gradeBook, assignment);
+
+          } else if (choice.equals("3")) { // Exit
             running = false;
           }
         }

@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
 
 public class Instructor extends User {
   private String name;
@@ -17,23 +18,30 @@ public class Instructor extends User {
 
   public void addAssignment(Assignment a) {}
 
-  public void recordGrade(Student s, double g, GradeBook gradeBook) {
-    gradeBook.addGrade(s, g);
+  public void recordGrade(Student s, double g, GradeBook gradeBook, Assignment a, int id) {
+    gradeBook.addGrade(s, a, id, g);
   }
 
-  public void viewAllGrades(GradeBook gradeBook) {
-    for (Map.Entry<String, ArrayList<Double>> entry : gradeBook.getAllGrades().entrySet()) {
-      System.out.println(entry.getKey() + ": " + entry.getValue());
+  public void viewAllGrades(GradeBook gradeBook, Assignment assignment) {
+    HashMap<String, HashMap<String, Double>> printGrades = gradeBook.getAllGrades(); 
+    for (String username : printGrades.keySet()) {
+      System.out.print(username);
+      printGrades.get(username).forEach((k,v) -> {
+          System.out.print(", " + k + ":" + v);
+        });
+      System.out.println();
     }
   }
 
-  public void exportStudentGradeFile(Student s, GradeBook gradeBook) {
+  public void exportStudentGradeFile(Student s, GradeBook gradeBook, Assignment a) {
     try {
-      PrintWriter writer = new PrintWriter(s.getUsername() + "_export.txt");
+      PrintWriter writer = new PrintWriter(s.getUsername() + "_grades.txt");
       writer.println("Student: " + s.getName());
-      ArrayList<Double> grades = gradeBook.getGradesForStudent(s);
-      writer.println("Grades: " + grades);
-      double avg = gradeBook.calculateAverage(s);
+      HashMap<String, Double> grades = gradeBook.getGradesForStudent(s);
+      grades.forEach((k,v) -> {
+          writer.println(k + ":  " + v);
+        });
+      double avg = gradeBook.calculateAverage(s, a);
       writer.println("Average: " + avg);
       writer.println("Letter Grade: " + gradeBook.determineLetterGrade(avg));
       writer.close();

@@ -1,33 +1,40 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Student extends User {
   private String name;
   private String email;
 
   public Student(String username, String password, String name, String email) {
-    super(username, password, "Student");
-    this.name = name;
-    this.email = email;
+    String[] data = User.returnData(username);
+    super(data[0], data[1], data[2]);
+    this.name = data[3];
+    this.email = data[4];
   }
 
-  public void viewOwnGrades(GradeBook gradeBook) {
-    ArrayList<Double> grades = gradeBook.getGradesForStudent(this);
-    System.out.println("Grades for " + name + ": " + grades);
-    double avg = gradeBook.calculateAverage(this);
+  public void viewOwnGrades(GradeBook gradeBook, Assignment a) {
+    System.out.println("Grades for " + name + ":");
+    HashMap<String, Double> grades = gradeBook.getGradesForStudent(this);
+      grades.forEach((k,v) -> {
+          System.out.println(k + ": " + v);
+        });
+    double avg = gradeBook.calculateAverage(this, a);
     System.out.println("Average: " + avg);
     System.out.println("Letter Grade: " + gradeBook.determineLetterGrade(avg));
   }
 
-  public void exportOwnGradeFile(GradeBook gradeBook) {
+  public void exportOwnGradeFile(GradeBook gradeBook, Assignment a) {
     try {
       PrintWriter writer = new PrintWriter(username + "_grades.txt");
       writer.println("Name: " + name);
       writer.println("Email: " + email);
-      ArrayList<Double> grades = gradeBook.getGradesForStudent(this);
-      writer.println("Grades: " + grades);
-      double avg = gradeBook.calculateAverage(this);
+      HashMap<String, Double> grades = gradeBook.getGradesForStudent(this);
+      grades.forEach((k,v) -> {
+          writer.println(", " + k + ":" + v);
+        });
+      double avg = gradeBook.calculateAverage(this, a);
       writer.println("Average: " + avg);
       writer.println("Letter Grade: " + gradeBook.determineLetterGrade(avg));
       writer.close();
