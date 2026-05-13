@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -32,13 +31,19 @@ public class GradeBook {
   }
 
   public double calculateAverage(Student s, Assignment a) {
-    ArrayList<Double> studentGrades = new ArrayList<Double>(getGradesForStudent(s).values());
+
+    HashMap<String, Double> studentGrades = student.get(s.getUsername());
+    
     if (studentGrades.isEmpty()) return 0.0;
     double sum = 0;
-    for (double g : studentGrades) {
-      sum += g;
+    double possible = 0;
+    for (String k : studentGrades.keySet()){
+      sum += studentGrades.get(k);
+      possible += a.getMaxPoints(k);
     }
-    return sum / a.getTotalPoints();
+
+    double avg = sum/possible;
+    return avg;
   }
 
   public String determineLetterGrade(double avg) {

@@ -1,5 +1,0 @@
-Name: jdoe
-Email: email
-Grades: [85.0, 92.5]
-Average: 88.75
-Letter Grade: B

@@ -1,3 +1,3 @@
 jdoe;Assignment 1,18.0;Assignment 2,21.0;Test 1,45.0
-Hodoodle;Assignment 1,14.0;Test 1,60.0;Assignment 2,25.0
+Hodoodle;Assignment 1,14.0;Test 1,50.0
 asmith;Assignment 1,12.0;Assignment 2,13.0

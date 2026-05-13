@@ -13,18 +13,20 @@ public class Student extends User {
     this.email = data[4];
   }
 
+  //Outputs the student's own grades
   public void viewOwnGrades(GradeBook gradeBook, Assignment a) {
     System.out.println("Grades for " + name + ":");
     HashMap<String, Double> grades = gradeBook.getGradesForStudent(this);
       grades.forEach((k,v) -> {
-          System.out.println(k + ": " + v);
+          System.out.println(k + ": " + v + "/" + a.getMaxPoints(k));
         });
     double avg = gradeBook.calculateAverage(this, a);
-    System.out.println("Average: " + avg);
+    System.out.printf("Average: " + "%.2f\n", avg);
     System.out.println("Letter Grade: " + gradeBook.determineLetterGrade(avg));
   }
 
-  public void exportOwnGradeFile(GradeBook gradeBook, Assignment a) {
+  //Overloaded from User class form of the same method
+  public void exportGradeFile(GradeBook gradeBook, Assignment a) {
     try {
       PrintWriter writer = new PrintWriter(username + "_grades.txt");
       writer.println("Name: " + name);
@@ -33,9 +35,10 @@ public class Student extends User {
       HashMap<String, Double> grades = gradeBook.getGradesForStudent(this);
       grades.forEach((k,v) -> {
           writer.println(k + ": " + v + "/" + a.getMaxPoints(k));
+
         });
       double avg = gradeBook.calculateAverage(this, a);
-      writer.println("Average: " + avg);
+      writer.printf("Average: %.2f\n", avg);
       writer.println("Letter Grade: " + gradeBook.determineLetterGrade(avg));
       writer.close();
     } catch (FileNotFoundException e) {

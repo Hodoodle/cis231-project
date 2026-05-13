@@ -13,8 +13,15 @@ public class Main {
       scanner.close();
       return;
     }
+
     if (!assignment.loadAssignmentsFromTextFile()) {
       System.out.println("Something went wrong with loading in assignments, check to see if the file has been deleted or corrupted.");
+      scanner.close();
+      return;
+    }
+
+    if (!User.loadLoginsFromTextFile()) {
+      System.out.println("Something went wrong with loading in logins, check to see if the file has been deleted or corrupted.");
       scanner.close();
       return;
     }
@@ -26,19 +33,7 @@ public class Main {
     String password = scanner.nextLine();
 
     if (User.login(username, password)) {
-      String role = "";
-      try {
-        Scanner fileScanner = new Scanner(new File("users.txt"));
-        while (fileScanner.hasNextLine()) {
-          String[] parts = fileScanner.nextLine().split(",");
-          if (parts[0].equals(username)) {
-            role = parts[2];
-            break;
-          }
-        }
-        fileScanner.close();
-      } catch (FileNotFoundException e) {
-      }
+      String role = User.getRole(username);
 
       if (role.equals("Instructor")) {
         Instructor instructor = new Instructor(username, password, username);
@@ -56,6 +51,10 @@ public class Main {
           if (choice.equals("1")) { // Add Student
             System.out.print("Student Username: ");
             String sUser = scanner.nextLine();
+            if(User.checkStudentExistence(sUser)){
+              System.out.println("A student with that username already exists.");
+              continue;
+            }
             System.out.print("Student Password: ");
             String sPass = scanner.nextLine();
             System.out.print("Student Name: ");
@@ -66,7 +65,7 @@ public class Main {
             Student s = new Student(sUser);
             instructor.addStudent(s, gradeBook);
 
-          } else if (choice.equals("2")) {
+          } else if (choice.equals("2")) { // Add assignment
             System.out.print("Assignment name: ");
             String aName = scanner.nextLine();
             System.out.print("Max Points: ");
@@ -79,9 +78,13 @@ public class Main {
             }
             assignment.addAssignment(aName, aPoints);
 
-          } else if (choice.equals("3")) { //Grade Assignment
+          } else if (choice.equals("3")) { // Grade Assignment
             System.out.print("Student Username: ");
             String sUser = scanner.nextLine();
+            if(!User.checkStudentExistence(sUser)){
+              System.out.println("Please enter a valid student username.");
+              continue;
+            }
             assignment.displayAssignmentIndex();
             System.out.print("Assignment Id: ");
             int aNum = 0;
@@ -92,7 +95,10 @@ public class Main {
               continue;
             }
             
-            if(!assignment.assignmentExists(aNum)){continue;}
+            if(!assignment.assignmentExists(aNum)){
+              System.out.println("Enter a valid Assignment ID");
+              continue;
+            }
             System.out.print("Grade: ");
             double g = Double.parseDouble(scanner.nextLine());
             Student s = new Student(sUser);
@@ -101,17 +107,21 @@ public class Main {
           } else if (choice.equals("4")) { // View All Grades
             instructor.viewAllGrades(gradeBook, assignment);
 
-          } else if (choice.equals("5")) { //Export Student Grade
+          } else if (choice.equals("5")) { // Export Student Grade
             System.out.print("Student Username: ");
             String sUser = scanner.nextLine();
+            if(!User.checkStudentExistence(sUser)){
+              System.out.println("Please enter a valid student username.");
+              continue;
+            }
             Student s = new Student(sUser);
-            instructor.exportStudentGradeFile(s, gradeBook, assignment);
+            instructor.exportGradeFile(s, gradeBook, assignment);
 
-          } else if (choice.equals("6")) {
+          } else if (choice.equals("6")) { // Exit
             running = false;
           }
         }
-      } else if (role.equals("Student")) {
+      } else if (role.equals("Student")) { // Student UI
         Student student = new Student(username);
         boolean running = true;
         while (running) {
@@ -122,12 +132,14 @@ public class Main {
             student.viewOwnGrades(gradeBook, assignment);
 
           } else if (choice.equals("2")) { // Export Grades
-            student.exportOwnGradeFile(gradeBook, assignment);
+            student.exportGradeFile(gradeBook, assignment);
 
           } else if (choice.equals("3")) { // Exit
             running = false;
           }
         }
+      } else {
+        System.out.println("Something went wrong with the login file, try again later.");
       }
     } else {
       System.out.println("Login Failed, reboot and try again.");

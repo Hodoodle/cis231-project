@@ -25,30 +25,18 @@ public class Instructor extends User {
 
   public void viewAllGrades(GradeBook gradeBook, Assignment assignment) {
     HashMap<String, HashMap<String, Double>> printGrades = gradeBook.getAllGrades(); 
+    double avg = 0;
+    String lGrade;
     for (String username : printGrades.keySet()) {
-      System.out.print(username);
+      System.out.print(username + "\t");
+      Student s = new Student(username);
       printGrades.get(username).forEach((k,v) -> {
-          System.out.print(", " + k + ":" + v);
-        });
-      System.out.println();
+        System.out.print(k + ": " + v + "/" + assignment.getMaxPoints(k) + "\t");
+      });
+      avg = gradeBook.calculateAverage(s, assignment);
+      lGrade = gradeBook.determineLetterGrade(avg);
+      System.out.printf("Average: %.2f, %s\n", avg, lGrade);
     }
   }
-
-  public void exportStudentGradeFile(Student s, GradeBook gradeBook, Assignment a) {
-    try {
-      PrintWriter writer = new PrintWriter(s.getUsername() + "_grades.txt");
-      writer.println("Name: " + s.getName());
-      writer.println("Username: " + s.getUsername());
-      writer.println("Email: " + s.getEmail());
-      HashMap<String, Double> grades = gradeBook.getGradesForStudent(s);
-      grades.forEach((k,v) -> {
-          writer.println(k + ":  " + v);
-        });
-      double avg = gradeBook.calculateAverage(s, a);
-      writer.println("Average: " + avg);
-      writer.println("Letter Grade: " + gradeBook.determineLetterGrade(avg));
-      writer.close();
-    } catch (FileNotFoundException e) {
-    }
-  }
+  
 }
