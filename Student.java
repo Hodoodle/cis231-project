@@ -13,7 +13,7 @@ public class Student extends User {
     this.email = data[4];
   }
 
-  //Outputs the student's own grades
+  // Outputs the student's own grades
   public void viewOwnGrades(GradeBook gradeBook, Assignment a) {
     System.out.println("Grades for " + name + ":");
     HashMap<String, Double> grades = gradeBook.getGradesForStudent(this);
@@ -25,7 +25,7 @@ public class Student extends User {
     System.out.println("Letter Grade: " + gradeBook.determineLetterGrade(avg));
   }
 
-  //Overloaded from User class form of the same method
+  // Overloaded from User class form of the same method
   public void exportGradeFile(GradeBook gradeBook, Assignment a) {
     try {
       PrintWriter writer = new PrintWriter(username + "_grades.txt");

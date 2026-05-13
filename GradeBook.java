@@ -5,20 +5,22 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class GradeBook {
-  private HashMap<String, HashMap<String,Double>> student;
-  private HashMap<String,Double> grades;
+  private HashMap<String, HashMap<String,Double>> student; // <Username, Grades hashmap>
+  private HashMap<String,Double> grades; // <Assignment name, Grade>
 
   public GradeBook() {
     student = new HashMap<>();
     grades = new HashMap<>();
   }
 
+  // Add student to hashmaps
   public void addStudent(Student s) {
     if (!student.containsKey(s.getUsername())) {
       student.put(s.getUsername(), grades);
     }
   }
 
+  // Add grade to student's grade hashmap
   public void addGrade(Student s, Assignment assignment, int a, double grade) {
     if (!student.containsKey(s.getUsername())) {
       student.put(s.getUsername(), grades);
@@ -26,10 +28,12 @@ public class GradeBook {
     student.get(s.getUsername()).put(assignment.getName(a), grade);
   }
 
+  // Returns a hashmap of gades for selected student
   public HashMap<String, Double> getGradesForStudent(Student s) {
     return student.getOrDefault(s.getUsername(), grades);
   }
 
+  // Calculates the average for a given student, skipping over assignments not yet graded
   public double calculateAverage(Student s, Assignment a) {
 
     HashMap<String, Double> studentGrades = student.get(s.getUsername());
@@ -42,12 +46,13 @@ public class GradeBook {
       possible += a.getMaxPoints(k);
     }
 
-    double avg = sum/possible;
+    double avg = 100 * (sum/possible);
     return avg;
   }
 
+  // Return letter grade for a given average
   public String determineLetterGrade(double avg) {
-    double average = avg * 100;
+    double average = avg;
     if (average >= 90) return "A";
     if (average >= 80) return "B";
     if (average >= 70) return "C";
@@ -55,6 +60,7 @@ public class GradeBook {
     return "F";
   }
 
+  // Overwrites grades.txt with current data
   public void saveGradesToTextFile() {
     try {
       PrintWriter writer = new PrintWriter("grades.txt");
@@ -70,6 +76,7 @@ public class GradeBook {
     }
   }
 
+  // Load hashmaps with data from grades.txt
   public boolean loadGradesFromTextFile() {
     try {
       File file = new File("grades.txt");
@@ -100,7 +107,19 @@ public class GradeBook {
     }
   }
 
-  public HashMap<String, HashMap<String, Double>> getAllGrades() {
-    return student;
+  // Prints all student grades
+  public void printAllGrades(Assignment a) {
+    double avg = 0;
+    String lGrade;
+    for (String username : student.keySet()) {
+      System.out.print(username + "\t");
+      Student s = new Student(username);
+      student.get(username).forEach((k,v) -> {
+        System.out.print(k + ": " + v + "/" + a.getMaxPoints(k) + "\t");
+      });
+      avg = this.calculateAverage(s, a);
+      lGrade = this.determineLetterGrade(avg);
+      System.out.printf("Average: %.2f, %s\n", avg, lGrade);
+    }
   }
 }

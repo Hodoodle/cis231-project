@@ -14,4 +14,8 @@ public class Course {
   public String getCourseDetails() {
     return courseName + " meets at " + meetingTime + " in " + roomNumber;
   }
+
+  public static String getInstructorUsername(){
+    return "profSmith";
+  }
 }

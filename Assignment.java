@@ -17,6 +17,7 @@ public class Assignment {
     numAssignments = 0;
   }
 
+  // Loads assignments from assignment.txt into hashmaps
   public boolean loadAssignmentsFromTextFile() {
     try {
       File file = new File("assignments.txt");
@@ -41,6 +42,7 @@ public class Assignment {
     }
   }
 
+  // Adds assignment to assignments.txt and assignment hashmaps
   public void addAssignment(String name, int points){
     int assignmentId = numAssignments + 1;
     assignmentIndex.put(assignmentId, name);
@@ -57,20 +59,19 @@ public class Assignment {
 
   }
 
-  public HashMap<Integer, String> getAssignmentIndex() {
-    return assignmentIndex;
-  }
-
+  // Display all assignments
   public void displayAssignmentIndex() {
     assignmentIndex.forEach((k, v) -> {
-      System.out.println("Id " + k + ": " + v);
+      System.out.println("Id " + k + ": " + v + ", " + getMaxPoints(k) + "points.");
     });
   }
 
+  // Get max points from ID
   public int getMaxPoints(int id) {
     return assignmentPoints.get(id);
   }
 
+  // Overload to get max points with name
   public int getMaxPoints(String name) {
     for (int i : assignmentIndex.keySet()){
       if (assignmentIndex.get(i).equals(name)){
@@ -80,27 +81,17 @@ public class Assignment {
     return 0;
   }
 
+  // Get name from assignment ID
   public String getName(int id){
     return assignmentIndex.get(id);
   }
 
+  // Check if assignment exists
   public boolean assignmentExists(int id){
     if(assignmentIndex.containsKey(id)){
       return true;
     } else {
       return false;
     }
-  }
-
-  public int getTotalPoints() {
-    int sum = 0;
-    for(int p : assignmentPoints.values()){
-      sum += p;
-    }
-    return sum;
-  }
-
-  public int getNumAssignments(){
-    return numAssignments;
   }
 }

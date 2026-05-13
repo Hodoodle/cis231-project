@@ -2,4 +2,4 @@ profSmith,admin123,Instructor,Professor Smith,profsmith@cuesta.edu
 jDoe,pass123,Student,John Doe,john_doe@my.cuesta.edu
 aSmith,pass456,Student,Alex Smith,alex_smith@my.cuesta.edu
 hPrice,doodlePass,Student,Hosea Price,hosea_price@my.cuesta.edu
-phoenixC,phenpass,Student,Pheonix Clark,pClark@studentmail.com
+phoenix,phonpass,Student,Pheonix Clark,pClark@studentmail.com
