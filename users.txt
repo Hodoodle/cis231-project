@@ -1,7 +1,5 @@
 profSmith,admin123,Instructor,Professor Smith,profsmith@cuesta.edu
-jdoe,pass123,Student,John Doe,john_doe@my.cuesta.edu
-asmith,pass456,Student,Alex Smith,alex_smith@my.cuesta.edu
-Hodoodle,doodlePass,Student,Hosae,pricehosea@gmail.com
-oaidsfh,aosif,Student,aosd,asod
-hosea_price,pricepass,Student,Hosea,pricehosea@gmail.com
-Hosea Price,hoseapricepass,Student,Hosea Price,hoprisce@gmail.com
+jDoe,pass123,Student,John Doe,john_doe@my.cuesta.edu
+aSmith,pass456,Student,Alex Smith,alex_smith@my.cuesta.edu
+hPrice,doodlePass,Student,Hosea Price,hosea_price@my.cuesta.edu
+phoenixC,phenpass,Student,Pheonix Clark,pClark@studentmail.com
