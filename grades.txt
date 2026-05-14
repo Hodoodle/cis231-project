@@ -1,4 +1,4 @@
 jDoe;Assignment 1,18.0;Assignment 2,21.0;Test 1,45.0
+phoenix;Test 1,50.0
 hPrice;Assignment 1,14.0;Test 1,50.0
 aSmith;Assignment 1,12.0;Assignment 2,13.0
-phoenix;Test 1,50.0

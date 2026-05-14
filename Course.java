@@ -1,21 +1,54 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 public class Course {
-  private String courseName;
-  private String meetingTime;
-  private String roomNumber;
-  private Instructor instructor;
+  private static String[] courseInfo;
 
-  public Course(String courseName, String meetingTime, String roomNumber, Instructor instructor) {
-    this.courseName = courseName;
-    this.meetingTime = meetingTime;
-    this.roomNumber = roomNumber;
-    this.instructor = instructor;
+  public Course() {
   }
 
-  public String getCourseDetails() {
-    return courseName + " meets at " + meetingTime + " in " + roomNumber;
-  }
-
-  public static String getInstructorUsername(){
+  public static String getInstructorUsername() {
     return "profSmith";
   }
+
+  public static Boolean loadCourseInfoFromTextFile() {
+
+    try {
+        File file = new File("courseInfo.txt");
+
+        if (!file.exists()) {
+            return false;
+        }
+
+        Scanner scanner = new Scanner(file);
+
+        if (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            courseInfo = line.split(",");
+        }
+
+        scanner.close();
+        return true;
+    }
+    catch (FileNotFoundException e) {
+        System.out.println("courseInfo.txt not found");
+    }
+
+    return false;
+}
+
+public static void printCourseInfo() {
+
+    if (courseInfo.length >= 4) {
+        System.out.println("Course Name: " + courseInfo[0]);
+        System.out.println("Meeting Time: " + courseInfo[1]);
+        System.out.println("Room Number: " + courseInfo[2]);
+        System.out.println("Instructor: " + courseInfo[3]);
+    }
+    else {
+        System.out.println("No course information found.");
+    }
+}
 }

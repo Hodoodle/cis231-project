@@ -26,6 +26,10 @@ public class Main {
       return;
     }
 
+    if (!Course.loadCourseInfoFromTextFile()){
+      System.out.println("Something went wrong with loading in course info, the program will still function but some information may not be displayed as intended.");
+    }
+
     // Login
     System.out.print("Enter Username: ");
     String username = scanner.nextLine();
@@ -34,6 +38,7 @@ public class Main {
 
     if (Login.login(username, password)) {
       String role = User.getRole(username);
+      Course.printCourseInfo();
 
       if (role.equals("Instructor")) {
         Instructor instructor = new Instructor(username);
