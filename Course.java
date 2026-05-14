@@ -1,18 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Course {
   private static String[] courseInfo;
 
-  public Course() {
-  }
-
-  public static String getInstructorUsername() {
-    return "profSmith";
-  }
-
+  // Loads course info from a text file
   public static Boolean loadCourseInfoFromTextFile() {
 
     try {
@@ -39,6 +32,7 @@ public class Course {
     return false;
 }
 
+// Prints course info to the console
 public static void printCourseInfo() {
 
     if (courseInfo.length >= 4) {
@@ -50,5 +44,11 @@ public static void printCourseInfo() {
     else {
         System.out.println("No course information found.");
     }
-}
+  }
+
+
+  public static String getInstructorUsername() {
+    return "profSmith";
+  }
+
 }

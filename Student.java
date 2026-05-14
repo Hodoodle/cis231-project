@@ -14,44 +14,36 @@ public class Student extends User {
   }
 
   // Outputs the student's own grades
-  public void viewOwnGrades(GradeBook gradeBook, Assignment a) {
+  public void viewOwnGrades(GradeBook g, Assignment a) {
     System.out.println("Grades for " + name + ":");
-    HashMap<String, Double> grades = gradeBook.getGradesForStudent(this);
+    HashMap<String, Double> grades = g.getGradesForStudent(this);
       grades.forEach((k,v) -> {
           System.out.println(k + ": " + v + "/" + a.getMaxPoints(k));
         });
-    double avg = gradeBook.calculateAverage(this, a);
+    double avg = g.calculateAverage(this, a);
     System.out.printf("Average: " + "%.2f\n", avg);
-    System.out.println("Letter Grade: " + gradeBook.determineLetterGrade(avg));
+    System.out.println("Letter Grade: " + g.determineLetterGrade(avg));
   }
 
   // Overloaded from User class form of the same method
-  public void exportGradeFile(GradeBook gradeBook, Assignment a) {
+  public void exportGradeFile(GradeBook g, Assignment a) {
     try {
       PrintWriter writer = new PrintWriter(username + "_grades.txt");
       writer.println("Name: " + name);
       writer.println("Username: " + username);
       writer.println("Email: " + email);
-      HashMap<String, Double> grades = gradeBook.getGradesForStudent(this);
+      HashMap<String, Double> grades = g.getGradesForStudent(this);
       grades.forEach((k,v) -> {
           writer.println(k + ": " + v + "/" + a.getMaxPoints(k));
 
         });
-      double avg = gradeBook.calculateAverage(this, a);
+      double avg = g.calculateAverage(this, a);
       writer.printf("Average: %.2f\n", avg);
-      writer.println("Letter Grade: " + gradeBook.determineLetterGrade(avg));
+      writer.println("Letter Grade: " + g.determineLetterGrade(avg));
       writer.close();
     } catch (FileNotFoundException e) {
       System.err.println(e.getMessage());
     }
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getEmail() {
-    return email;
   }
 
   public String getUsername(){

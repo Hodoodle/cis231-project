@@ -21,11 +21,11 @@ public class GradeBook {
   }
 
   // Add grade to student's grade hashmap
-  public void addGrade(Student s, Assignment assignment, int a, double grade) {
+  public void addGrade(Student s, Assignment assign, int a, double grade) {
     if (!student.containsKey(s.getUsername())) {
       student.put(s.getUsername(), grades);
     }
-    student.get(s.getUsername()).put(assignment.getName(a), grade);
+    student.get(s.getUsername()).put(assign.getName(a), grade);
   }
 
   // Returns a hashmap of gades for selected student

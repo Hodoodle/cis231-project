@@ -16,21 +16,21 @@ public abstract class User {
   }
 
   // Both the Instructor and Student class have a method that does this but they do it slightly differently
-  public void exportGradeFile(Student s, GradeBook gradeBook, Assignment a) {
+  public void exportGradeFile(Student s, GradeBook g, Assignment a) {
     try {
       PrintWriter writer = new PrintWriter(username + "_grades.txt");
       String [] info = User.returnData(username);
       writer.println("Name: " + info[3]);
       writer.println("Username: " + username);
       writer.println("Email: " + info[4]);
-      HashMap<String, Double> grades = gradeBook.getGradesForStudent(s);
+      HashMap<String, Double> grades = g.getGradesForStudent(s);
       grades.forEach((k,v) -> {
           writer.println(k + ": " + v + "/" + a.getMaxPoints(k));
 
         });
-      double avg = gradeBook.calculateAverage(s, a);
+      double avg = g.calculateAverage(s, a);
       writer.printf("Average: %.2f\n", avg);
-      writer.println("Letter Grade: " + gradeBook.determineLetterGrade(avg));
+      writer.println("Letter Grade: " + g.determineLetterGrade(avg));
       writer.close();
     } catch (FileNotFoundException e) {
       System.err.println(e.getMessage());

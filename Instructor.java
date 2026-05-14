@@ -1,17 +1,13 @@
 public class Instructor extends User {
-  private String name;
-  private String email;
 
   public Instructor(String username) {
     String[] data = User.returnData(username);
     super(data[0], data[1], data[2]);
-    this.name = data[3];
-    this.email = data[4];
   }
 
   // Interfaces with the Gradebook class to add a student into the gradebook
-  public void addStudent(Student s, GradeBook gradeBook) {
-    gradeBook.addStudent(s);
+  public void addStudent(Student s, GradeBook g) {
+    g.addStudent(s);
   }
 
   // Interfaces with the Assignemnt class to add assignments
@@ -20,13 +16,13 @@ public class Instructor extends User {
   }
 
   // Interfaces with the Gradebook class to add assignment grades
-  public void recordGrade(Student s, double g, GradeBook gradeBook, Assignment a, int id) {
-    gradeBook.addGrade(s, a, id, g);
+  public void recordGrade(Student s, double grade, GradeBook g, Assignment a, int id) {
+    g.addGrade(s, a, id, grade);
   }
 
   // Interfaces with the gradebok class to display all student grades
-  public void viewAllGrades(GradeBook gradeBook, Assignment assignment) {
-    gradeBook.printAllGrades(assignment);
+  public void viewAllGrades(GradeBook g, Assignment a) {
+    g.printAllGrades(a);
   }
   
 }
