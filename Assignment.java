@@ -76,6 +76,8 @@ public class Assignment {
     for (int i : assignmentIndex.keySet()){
       if (assignmentIndex.get(i).equals(name)){
         return assignmentPoints.get(i);
+      } else {
+        return -1;
       }
     }
     return 0;

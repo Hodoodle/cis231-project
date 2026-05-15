@@ -77,6 +77,11 @@ public class Main {
           } else if (choice.equals("2")) { // Add assignment
             System.out.print("Assignment name: ");
             String aName = scanner.nextLine();
+            if(assignment.getMaxPoints(aName) == -1){
+              System.out.println("An assignment with that name already exists");
+              continue;
+            }
+
             System.out.print("Max Points: ");
             int aPoints = 0;
             try{
@@ -85,6 +90,7 @@ public class Main {
               System.out.println("Enter a valid number.");
               continue;
             }
+
             instructor.addAssignment(assignment, aName, aPoints);
 
           } else if (choice.equals("3")) { // Grade Assignment
